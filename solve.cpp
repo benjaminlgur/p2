@@ -1,3 +1,11 @@
+/*
+  Author: <Benjamin Gur>
+  Course: {135}
+  Instructor: <Prof. Pajela>
+  Assignment: <Project 2>
+
+  This program will implement Project 2. It currently only accomplishes a better solve time by instead of brute forcing a-z it uses letter prevalence in the English language. 
+*/
 
 #include "solve.h"
 
