@@ -48,6 +48,10 @@ void solve(Puzzle &puzzle){
                 soFar++;
                 wordSize = 0;
             }
+            if (soFar >= puzzle.width) {
+                wordSize = 0;
+                soFar = 0;
+            }
             if (wordSize < 4){
                 guess(puzzle, r, c);
                 puzzle.print();
@@ -57,23 +61,17 @@ void solve(Puzzle &puzzle){
                 for(int a = 0; a < puzzle.numWords; a++){
                     if(puzzle.get(r , c - 1) == puzzle.words[a][2] && puzzle.get(r , c - 2) == puzzle.words[a][1] && puzzle.get (r, c - 3) == puzzle.words[a][0]){
                         for(int i = 3; i < puzzle.words[a].length(); i++){
-                            cout << "aaaa " << puzzle.words[a][i] << endl;
-                            cout << "bbbb " << c << endl;
-                            puzzle.guess(r, c + n, puzzle.words[a][i]);
+                            puzzle.guess(r, c, puzzle.words[a][i]);
                             puzzle.print();
-                            n++;
+                            c++;
                         }
                         wordSize = 0;
-                        soFar = 0;
                     }
                 }
-            }
-            if (soFar >= puzzle.width) {
-                wordSize = 0;
-                soFar = 0;
             }      
         }
     }
+    
     for (int r = 0; r < puzzle.height; r++) {
         for (int c = 0; c < puzzle.width; c++) {
             if (puzzle.get(r,c) == '?') {
@@ -84,4 +82,5 @@ void solve(Puzzle &puzzle){
             }
         }
     }
+    
 }
