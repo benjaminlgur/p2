@@ -39,24 +39,37 @@ void solve(Puzzle &puzzle){
     int soFar = 0;
     for (int r = 0; r < puzzle.height; r++){
         for (int c = 0; c < puzzle.width; c++){
-            for(int a = 0; a < puzzle.numWords; a++){
-                if(puzzle.get(r , c - 1) == puzzle.words[a][2] && puzzle.get(r , c - 2) == puzzle.words[a][1] && puzzle.get (r, c - 3) == puzzle.words[a][0]){
-                    for(int i = 3; i < puzzle.words[a].length(); i++){
-                        puzzle.guess(r, c, puzzle.words[a][i]);
-                        puzzle.print();
-                        c++;
+            if (puzzle.get(r,c) == '?'){
+                wordSize++;
+            }
+            if (puzzle.get(r,c) == ' '){
+                wordSize = 0;
+            }
+            if (c + 1 > puzzle.width){
+                wordSize = 0;
+            }
+            if (wordSize < 5){
+                guess(puzzle, r, c);
+                puzzle.print();
+            }
+            if (wordSize >= 3){
+                //Start
+                cout << "Word size " << wordSize << endl;
+                for(int a = 0; a < puzzle.numWords; a++){
+                    if(puzzle.get(r , c - 1) == puzzle.words[a][2] && puzzle.get(r , c - 2) == puzzle.words[a][1] && puzzle.get (r, c - 3) == puzzle.words[a][0]){
+                        for(int i = 3; i < puzzle.words[a].length(); i++){
+                            puzzle.guess(r, c, puzzle.words[a][i]);
+                            puzzle.print();
+                            c++;
+                        }
+                        wordSize = 0;
                     }
                 }
-                else if (puzzle.get(r,c) == '?'){
-                    guess(puzzle, r, c);
-                    puzzle.print();
-                }
-            }
-        }      
+            }      
+        }
     }
-}
     // Just in case.
-    
+    /*
     for (int r = 0; r < puzzle.height; r++) {
         for (int c = 0; c < puzzle.width; c++) {
             if (puzzle.get(r,c) == '?') {
@@ -67,4 +80,5 @@ void solve(Puzzle &puzzle){
             }
         }
     }
-    
+    */
+}
