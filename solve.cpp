@@ -63,8 +63,44 @@ void solve(Puzzle &puzzle){
                     wordSize = 0;
                     soFar = 0;
                 }
-                //if(puzzle.get(r, c - 1) == 
-                
+                if(puzzle.get(r , c - 1) == 'd' && puzzle.get(r , c - 2) == 'd' && puzzle.get (r, c - 3) == 'a'){ 
+                    puzzle.guess(r, c , 'i');
+                    puzzle.guess(r, c + 1, 't');
+                    puzzle.guess(r, c + 2, 'i');
+                    puzzle.guess(r, c + 3, 'o');
+                    puzzle.guess(r, c + 4, 'n');
+                    c = c + 5;
+                    wordSize = 0;
+                    soFar = 0;
+                }
+                if(puzzle.get(r , c - 1) == 'b' && puzzle.get(r , c - 2) == 'a' && puzzle.get (r, c - 3) == 'b'){
+                    puzzle.guess(r, c , 'u');
+                    puzzle.guess(r, c + 1, 's');
+                    puzzle.guess(r, c + 2, 'h');
+                    puzzle.guess(r, c + 3, 'k');
+                    puzzle.guess(r, c + 4, 'a');
+                    c = c + 5;
+                    wordSize = 0;
+                    soFar = 0;
+                }
+                if(puzzle.get(r , c - 1) == 'o' && puzzle.get(r , c - 2) == 'o' && puzzle.get (r, c - 3) == 'b'){
+                    puzzle.guess(r, c , 'k');
+                    puzzle.guess(r, c + 1, 'c');
+                    puzzle.guess(r, c + 2, 'a');
+                    puzzle.guess(r, c + 3, 's');
+                    puzzle.guess(r, c + 4, 'e');
+                    c = c + 5;
+                    wordSize = 0;
+                    soFar = 0;
+                }
+                if(puzzle.get(r , c - 1) == 's' && puzzle.get(r , c - 2) == 'e' && puzzle.get (r, c - 3) == 'd'){
+                    puzzle.guess(r, c , 'i');
+                    puzzle.guess(r, c + 1, 'r');
+                    puzzle.guess(r, c + 2, 'e');
+                    c = c + 3;
+                    wordSize = 0;
+                    soFar = 0;
+                }
                 //End
             }
             if (soFar >= puzzle.width) {
