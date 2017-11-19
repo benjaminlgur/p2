@@ -54,13 +54,16 @@ void solve(Puzzle &puzzle){
             if (wordSize >= 4){
                 //Start
                 if(puzzle.get(r , c - 1) == 't' && puzzle.get(r , c - 2) == 'i' && puzzle.get (r, c - 3) == 't'){
-                    puzzle.guess(r, c + 1, 'a');
-                    puzzle.guess(r, c + 2, 'n');
-                    puzzle.guess(r, c + 3, 'i');
-                    puzzle.guess(r, c + 4, 'u');
-                    puzzle.guess(r, c + 5, 'm');
+                    puzzle.guess(r, c , 'a');
+                    puzzle.guess(r, c + 1, 'n');
+                    puzzle.guess(r, c + 2, 'i');
+                    puzzle.guess(r, c + 3, 'u');
+                    puzzle.guess(r, c + 4, 'm');
                     c = c + 5;
+                    wordSize = 0;
+                    soFar = 0;
                 }
+                //if(puzzle.get(r, c - 1) == 
                 
                 //End
             }
