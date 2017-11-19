@@ -37,22 +37,18 @@ void guess(Puzzle &puzzle, int row, int col){
 void solve(Puzzle &puzzle){
     int wordSize = 0;
     int soFar = 0;
-    int n = 0;
     for (int r = 0; r < puzzle.height; r++){
         for (int c = 0; c < puzzle.width; c++){
-            if(puzzle.get(r,c) == '?'){
+            if (puzzle.get(r,c) == '?'){
                 wordSize++;
-                soFar++;
             }
-            if(puzzle.get(r,c) == ' '){
-                soFar++;
+            if (puzzle.get(r,c) == ' '){
                 wordSize = 0;
             }
-            if (soFar >= puzzle.width) {
+            if (c + 1 > puzzle.width){
                 wordSize = 0;
-                soFar = 0;
             }
-            if (wordSize < 4){
+            if (wordSize < 5){
                 guess(puzzle, r, c);
                 puzzle.print();
             }
@@ -71,6 +67,7 @@ void solve(Puzzle &puzzle){
             }      
         }
     }
+    // Just in case.
     
     for (int r = 0; r < puzzle.height; r++) {
         for (int c = 0; c < puzzle.width; c++) {
@@ -82,5 +79,5 @@ void solve(Puzzle &puzzle){
             }
         }
     }
-    
+
 }
