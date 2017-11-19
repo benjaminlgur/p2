@@ -37,6 +37,7 @@ void guess(Puzzle &puzzle, int row, int col){
 void solve(Puzzle &puzzle){
     int wordSize = 0;
     int soFar = 0;
+    int n = 0;
     for (int r = 0; r < puzzle.height; r++){
         for (int c = 0; c < puzzle.width; c++){
             if(puzzle.get(r,c) == '?'){
@@ -53,61 +54,34 @@ void solve(Puzzle &puzzle){
             }
             if (wordSize >= 4){
                 //Start
-                if(puzzle.get(r , c - 1) == 't' && puzzle.get(r , c - 2) == 'i' && puzzle.get (r, c - 3) == 't'){
-                    puzzle.guess(r, c , 'a');
-                    puzzle.guess(r, c + 1, 'n');
-                    puzzle.guess(r, c + 2, 'i');
-                    puzzle.guess(r, c + 3, 'u');
-                    puzzle.guess(r, c + 4, 'm');
-                    c = c + 5;
-                    wordSize = 0;
-                    soFar = 0;
+                for(int a = 0; a < puzzle.numWords; a++){
+                    if(puzzle.get(r , c - 1) == puzzle.words[a][2] && puzzle.get(r , c - 2) == puzzle.words[a][1] && puzzle.get (r, c - 3) == puzzle.words[a][0]){
+                        for(int i = 3; i < puzzle.words[a].length(); i++){
+                            cout << "aaaa " << puzzle.words[a][i] << endl;
+                            cout << "bbbb " << c << endl;
+                            puzzle.guess(r, c + n, puzzle.words[a][i]);
+                            puzzle.print();
+                            n++;
+                        }
+                        wordSize = 0;
+                        soFar = 0;
+                    }
                 }
-                if(puzzle.get(r , c - 1) == 'd' && puzzle.get(r , c - 2) == 'd' && puzzle.get (r, c - 3) == 'a'){ 
-                    puzzle.guess(r, c , 'i');
-                    puzzle.guess(r, c + 1, 't');
-                    puzzle.guess(r, c + 2, 'i');
-                    puzzle.guess(r, c + 3, 'o');
-                    puzzle.guess(r, c + 4, 'n');
-                    c = c + 5;
-                    wordSize = 0;
-                    soFar = 0;
-                }
-                if(puzzle.get(r , c - 1) == 'b' && puzzle.get(r , c - 2) == 'a' && puzzle.get (r, c - 3) == 'b'){
-                    puzzle.guess(r, c , 'u');
-                    puzzle.guess(r, c + 1, 's');
-                    puzzle.guess(r, c + 2, 'h');
-                    puzzle.guess(r, c + 3, 'k');
-                    puzzle.guess(r, c + 4, 'a');
-                    c = c + 5;
-                    wordSize = 0;
-                    soFar = 0;
-                }
-                if(puzzle.get(r , c - 1) == 'o' && puzzle.get(r , c - 2) == 'o' && puzzle.get (r, c - 3) == 'b'){
-                    puzzle.guess(r, c , 'k');
-                    puzzle.guess(r, c + 1, 'c');
-                    puzzle.guess(r, c + 2, 'a');
-                    puzzle.guess(r, c + 3, 's');
-                    puzzle.guess(r, c + 4, 'e');
-                    c = c + 5;
-                    wordSize = 0;
-                    soFar = 0;
-                }
-                if(puzzle.get(r , c - 1) == 's' && puzzle.get(r , c - 2) == 'e' && puzzle.get (r, c - 3) == 'd'){
-                    puzzle.guess(r, c , 'i');
-                    puzzle.guess(r, c + 1, 'r');
-                    puzzle.guess(r, c + 2, 'e');
-                    c = c + 3;
-                    wordSize = 0;
-                    soFar = 0;
-                }
-                //End
             }
             if (soFar >= puzzle.width) {
                 wordSize = 0;
                 soFar = 0;
+            }      
+        }
+    }
+    for (int r = 0; r < puzzle.height; r++) {
+        for (int c = 0; c < puzzle.width; c++) {
+            if (puzzle.get(r,c) == '?') {
+                // find the letter if it's a question mark
+                guess(puzzle, r, c);
+                // print the picture
+                puzzle.print();
             }
         }
     }
 }
-            
