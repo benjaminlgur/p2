@@ -73,7 +73,7 @@ int maxMatch (int arrSize, int *match){
 
 int maxWordSize(Puzzle &puzzle){
     int max = 0;
-    for(int i = 0; i < puzzle.numWords[]; i++){
+    for(int i = 0; i < puzzle.numWords; i++){
         if(puzzle.words[i].length() > max){
             max = puzzle.words[i].length();
         }
@@ -142,13 +142,9 @@ void solve(Puzzle &puzzle){
                     reset = 0;
                     if(maxMatch(puzzle.numWords, match) == b && maxMatch(puzzle.numWords, match) >= 0){
                         for(int w = 0; w < puzzle.words[b].length(); w++){
-                            //Had to inclued this as for some reason I would sometimes end up in an infinte loop.
-                            if(tooMuch > maxWordSize(puzzle) + 3){ //the + 3 is for safety.
-                                break;
-                            }
                             works = puzzle.guess(r, c, puzzle.words[b][w]);
                             if (works == false){
-                                r = reset - r;
+                                r = r - reset;
                                 reset = 0;
                                 *(match + b) = -5; //Its a negetive number to not distirbe the 0 values.
                                 b = 0;
@@ -158,7 +154,6 @@ void solve(Puzzle &puzzle){
                                 puzzle.print();
                                 r++;
                                 reset++;
-                                tooMuch++;
                             }
                         }
                     }
@@ -166,10 +161,11 @@ void solve(Puzzle &puzzle){
             }
         }
     }
-    delete []match;                            
+    delete []match;   
+}                         
                             
     //Just in case 
-    
+    /*
     for (int r = 0; r < puzzle.height; r++){
         for (int c = 0; c < puzzle.width; c++){
             if (puzzle.get(r,c) == '?') {
@@ -180,4 +176,4 @@ void solve(Puzzle &puzzle){
             }
         }
     }
-}
+}*/
