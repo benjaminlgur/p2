@@ -83,6 +83,12 @@ void solve(Puzzle &puzzle){
                         }
                     }
                 }
+            }
+        }
+    }
+    for (int r = 0; r < puzzle.height; r++){
+        for (int c = 0; c < puzzle.width; c++){
+            if(puzzle.get(r,c) != ' '){
                 for(int b = 0; b < puzzle.numWords; b++){
                     reset = 0;
                     if(vertLength(puzzle, r, c) == puzzle.words[b].length()){
@@ -104,8 +110,6 @@ void solve(Puzzle &puzzle){
             }
         }
     }
-}
-    /*
     for (int r = 0; r < puzzle.height; r++){
         for (int c = 0; c < puzzle.width; c++){
             if (puzzle.get(r,c) == '?') {
@@ -116,4 +120,4 @@ void solve(Puzzle &puzzle){
             }
         }
     }
-}*/
+}
