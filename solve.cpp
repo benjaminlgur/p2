@@ -134,7 +134,7 @@ void solve(Puzzle &puzzle){
                     if(maxMatch(puzzle.numWords, match) == b && maxMatch(puzzle.numWords, match) >= 0){
                         for(int w = 0; w < puzzle.words[b].length(); w++){
                             //Had to inclued this as for some reason I would sometimes end up in an infinte loop.
-                            if(tooMuch > 5000){
+                            if(tooMuch > 200){
                                 break;
                             }
                             works = puzzle.guess(r, c, puzzle.words[b][w]);
