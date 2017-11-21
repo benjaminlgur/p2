@@ -111,8 +111,8 @@ void solve(Puzzle &puzzle){
             }
         }
     }
-}
-    /*
+    //Just in case 
+
     for (int r = 0; r < puzzle.height; r++){
         for (int c = 0; c < puzzle.width; c++){
             if (puzzle.get(r,c) == '?') {
@@ -123,4 +123,4 @@ void solve(Puzzle &puzzle){
             }
         }
     }
-}*/
+}
