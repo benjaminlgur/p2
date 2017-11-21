@@ -70,7 +70,16 @@ int maxMatch (int arrSize, int *match){
     }
     return place;
 }
-    
+
+int maxWordSize(Puzzle &puzzle){
+    int max = 0;
+    for(int i = 0; i < puzzle.numWords[]; i++){
+        if(puzzle.words[i].length() > max){
+            max = puzzle.words[i].length();
+        }
+    }
+    return max;
+}
 
 /* The main function solving the crossword puzzle */
 void solve(Puzzle &puzzle){
@@ -134,7 +143,7 @@ void solve(Puzzle &puzzle){
                     if(maxMatch(puzzle.numWords, match) == b && maxMatch(puzzle.numWords, match) >= 0){
                         for(int w = 0; w < puzzle.words[b].length(); w++){
                             //Had to inclued this as for some reason I would sometimes end up in an infinte loop.
-                            if(tooMuch > 200){
+                            if(tooMuch > maxWordSize(puzzle) + 3){ //the + 3 is for safety.
                                 break;
                             }
                             works = puzzle.guess(r, c, puzzle.words[b][w]);
