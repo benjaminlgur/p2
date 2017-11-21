@@ -94,7 +94,15 @@ void solve(Puzzle &puzzle){
                     reset = 0;
                     if(vertLength(puzzle, r, c) == puzzle.words[b].length()){
                         for(int w = 0; w < puzzle.words[b].length(); w++){
-                            works = puzzle.guess(r, c, puzzle.words[b][w]);
+                            if(puzzle.get(r, c) == '?'){
+                                works = puzzle.guess(r, c, puzzle.words[b][w]);
+                            }
+                            else if(puzzle.get(r, c) == puzzle.words[b][w]){
+                                works = true;
+                            }
+                            else if(puzzle.get(r, c) != puzzle.words[b][w] && puzzle.get(r, c) != '?'){
+                                works = false;
+                            }
                             if (works == false){
                                 r = r - reset;
                                 reset = 0;
@@ -111,8 +119,9 @@ void solve(Puzzle &puzzle){
             }
         }
     }
+}
     //Just in case 
-
+    /*
     for (int r = 0; r < puzzle.height; r++){
         for (int c = 0; c < puzzle.width; c++){
             if (puzzle.get(r,c) == '?') {
@@ -123,4 +132,4 @@ void solve(Puzzle &puzzle){
             }
         }
     }
-}
+}*/
