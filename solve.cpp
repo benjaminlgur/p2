@@ -40,7 +40,21 @@ int horLength (Puzzle &puzzle, int r, int c){
     return wordSize;
 }
 
-        
+int vertLength (Puzzle &puzzle, int r, int c){
+    int wordSize = 0;
+    char curChar = '?';
+    while (curChar != ' '){
+        curChar = puzzle.get(r, c);
+        if(curChar != ' '){
+            wordSize++;
+            r++;
+        }
+        else {
+            break;
+        }
+    }
+    return wordSize;
+}      
     
 
 /* The main function solving the crossword puzzle */
@@ -54,7 +68,6 @@ void solve(Puzzle &puzzle){
                 for(int a = 0; a < puzzle.numWords; a++){
                     reset = 0;
                     if(horLength(puzzle, r, c) == puzzle.words[a].length()){
-                       // cout << "DASD " << horLength(puzzle, r, c) << " " << puzzle.words[a].length() << " " << a << " " << r << " " << c << endl; return;
                         for(int l = 0; l < puzzle.words[a].length(); l++){
                             works = puzzle.guess(r, c, puzzle.words[a][l]);
                             if (works == false){
@@ -68,6 +81,24 @@ void solve(Puzzle &puzzle){
                                 reset++;
                             }
                         }
+                    }
+                }
+                for(int b = 0; b < puzzle.numWords; b++){
+                    reset = 0;
+                    if(vertLength(puzzle, r, c) == puzzle.words[b].length()){
+                        for (int w = 0; w < puzzle.words[b].length(); w++){
+                            works = puzzle.guess(r, c, puzzle.words[b][w]);
+                            if (works == false){
+                                r = r - reset;
+                                break;
+                            }
+                            else {
+                                puzzle.print();
+                                r++;
+                                reset++;
+                            }
+                        }
+                        r = r - reset;
                     }
                 }
             }
