@@ -11,7 +11,6 @@
 
 const char brute[26] = {'e', 't', 'a', 'o', 'i', 'n', 's', 'h', 'r', 'd', 'l', 'c', 'u', 'm', 'w', 'f', 'g', 'y', 'p', 'b', 'v', 'k', 'j', 'x', 'q', 'z'}; //array populated based on order of letter prevalence in English.
 
-const char titanium[8] = {'t','i','t','a','n','i','u','m'};
 
 using namespace std;
 
@@ -25,53 +24,59 @@ void guess(Puzzle &puzzle, int row, int col){
     }
 }
 
-/*void titaniumWord(Puzzle &puzzle, int r, int c){
-    puzzle.guess(r, c + 1, 'a');
-    puzzle.guess(r, c + 2, 'n');
-    puzzle.guess(r, c + 3, 'i');
-    puzzle.guess(r, c + 4, 'u');
-    puzzle.guess(r, c + 5, 'm');
-}*/
+int horLength (Puzzle &puzzle, int r, int c){
+    int wordSize = 0;
+    char curChar = '?';
+    while (curChar != ' '){
+        curChar = puzzle.get(r, c);
+        if(curChar !=  ' '){
+            wordSize++;
+            c++;
+        }
+        else {
+            break;
+        }
+    }
+    return wordSize;
+}
+
+        
+    
 
 /* The main function solving the crossword puzzle */
 void solve(Puzzle &puzzle){
-    int wordSize = 0;
-    int soFar = 0;
+    //for(int i=0; i<puzzle.numWords; i++) cout<<puzzle.words[i]<<endl; return;
+    bool works;
+    int reset = 0;
     for (int r = 0; r < puzzle.height; r++){
         for (int c = 0; c < puzzle.width; c++){
-            if (puzzle.get(r,c) == '?'){
-                wordSize++;
-            }
-            if (puzzle.get(r,c) == ' '){
-                wordSize = 0;
-            }
-            if (c + 1 > puzzle.width){
-                wordSize = 0;
-            }
-            if (wordSize < 5){
-                guess(puzzle, r, c);
-                puzzle.print();
-            }
-            if (wordSize >= 3){
-                //Start
-                cout << "Word size " << wordSize << endl;
+            if(puzzle.get(r,c) != ' '){
                 for(int a = 0; a < puzzle.numWords; a++){
-                    if(puzzle.get(r , c - 1) == puzzle.words[a][2] && puzzle.get(r , c - 2) == puzzle.words[a][1] && puzzle.get (r, c - 3) == puzzle.words[a][0]){
-                        for(int i = 3; i < puzzle.words[a].length(); i++){
-                            puzzle.guess(r, c, puzzle.words[a][i]);
-                            puzzle.print();
-                            c++;
+                    reset = 0;
+                    if(horLength(puzzle, r, c) == puzzle.words[a].length()){
+                       // cout << "DASD " << horLength(puzzle, r, c) << " " << puzzle.words[a].length() << " " << a << " " << r << " " << c << endl; return;
+                        for(int l = 0; l < puzzle.words[a].length(); l++){
+                            works = puzzle.guess(r, c, puzzle.words[a][l]);
+                            if (works == false){
+                                c = c - reset;
+                                reset = 0;
+                                break;
+                            }
+                            else {
+                                puzzle.print();
+                                c++;
+                                reset++;
+                            }
                         }
-                        wordSize = 0;
                     }
                 }
-            }      
+            }
         }
     }
-    // Just in case.
+}
     /*
-    for (int r = 0; r < puzzle.height; r++) {
-        for (int c = 0; c < puzzle.width; c++) {
+    for (int r = 0; r < puzzle.height; r++){
+        for (int c = 0; c < puzzle.width; c++){
             if (puzzle.get(r,c) == '?') {
                 // find the letter if it's a question mark
                 guess(puzzle, r, c);
@@ -80,5 +85,4 @@ void solve(Puzzle &puzzle){
             }
         }
     }
-    */
-}
+}*/
