@@ -161,11 +161,8 @@ void solve(Puzzle &puzzle){
             }
         }
     }
-    delete []match;   
-}                         
-                            
+    delete []match;                                                        
     //Just in case 
-    /*
     for (int r = 0; r < puzzle.height; r++){
         for (int c = 0; c < puzzle.width; c++){
             if (puzzle.get(r,c) == '?') {
@@ -176,4 +173,4 @@ void solve(Puzzle &puzzle){
             }
         }
     }
-}*/
+}
