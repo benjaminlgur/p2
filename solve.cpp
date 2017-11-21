@@ -55,6 +55,21 @@ int vertLength (Puzzle &puzzle, int r, int c){
     }
     return wordSize;
 }      
+
+int maxMatch (int arrSize, int *match){
+    int max = -5;
+    int place = 0;
+    for (int i = 0; i < arrSize; i++){
+        if (*(match + i) >= max){
+            max = *(match + i);
+            place = i;
+        }
+    }
+    if (max < 0){
+        return -5;
+    }
+    return place;
+}
     
 
 /* The main function solving the crossword puzzle */
@@ -87,28 +102,45 @@ void solve(Puzzle &puzzle){
             }
         }
     }
+    int *match = NULL;
+    match = new int[puzzle.numWords + 1]; //+1 for safty.
     for(int c = 0; c < puzzle.width; c++){
         for(int r = 0; r < puzzle.height; r++){
             if(puzzle.get(r,c) != ' '){
+            //initailizes array to 0.
+                for(int i = 0; i <puzzle.numWords; i++){
+                    *(match + i) = 0 ;
+                }
                 for(int b = 0; b < puzzle.numWords; b++){
                     reset = 0;
                     if(vertLength(puzzle, r, c) == puzzle.words[b].length()){
                         for(int w = 0; w < puzzle.words[b].length(); w++){
-                            if(puzzle.get(r, c) == '?'){
-                                works = puzzle.guess(r, c, puzzle.words[b][w]);
+                            if(puzzle.get(r, c) == puzzle.words[b][w]){
+                                r++;
+                                reset++;
+                                *(match + b) = *(match + b) + 1;
                             }
-                            else if(puzzle.get(r, c) == puzzle.words[b][w]){
-                                works = true;
+                            else{
+                                r++;
+                                reset++;
                             }
-                            else if(puzzle.get(r, c) != puzzle.words[b][w] && puzzle.get(r, c) != '?'){
-                                works = false;
-                            }
+                        }
+                    }
+                    r = r - reset;
+                }
+                for (int b = 0; b < puzzle.numWords; b++){
+                    reset = 0;
+                    if(maxMatch(puzzle.numWords, match) == b && maxMatch(puzzle.numWords, match) >= 0){
+                        for(int w = 0; w < puzzle.words[b].length(); w++){
+                            works = puzzle.guess(r, c, puzzle.words[b][w]);
                             if (works == false){
-                                r = r - reset;
+                                r = reset - r;
                                 reset = 0;
+                                *(match + b) = -5; //Its a negetive number to not distirbe the 0 values.
+                                b = 0;
                                 break;
                             }
-                            else {
+                            else{
                                 puzzle.print();
                                 r++;
                                 reset++;
@@ -120,6 +152,8 @@ void solve(Puzzle &puzzle){
         }
     }
 }
+                                
+                            
     //Just in case 
     /*
     for (int r = 0; r < puzzle.height; r++){
