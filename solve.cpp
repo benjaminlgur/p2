@@ -74,6 +74,7 @@ int maxMatch (int arrSize, int *match){
 
 /* The main function solving the crossword puzzle */
 void solve(Puzzle &puzzle){
+    int tooMuch = 0;
     //cout << "ADAD " << bull << endl; return;
     //for(int i=0; i<puzzle.numWords; i++) cout<<puzzle.words[i]<<endl; return;
     bool works;
@@ -132,6 +133,10 @@ void solve(Puzzle &puzzle){
                     reset = 0;
                     if(maxMatch(puzzle.numWords, match) == b && maxMatch(puzzle.numWords, match) >= 0){
                         for(int w = 0; w < puzzle.words[b].length(); w++){
+                            //Had to inclued this as for some reason I would sometimes end up in an infinte loop.
+                            if(tooMuch > 5000){
+                                break;
+                            }
                             works = puzzle.guess(r, c, puzzle.words[b][w]);
                             if (works == false){
                                 r = reset - r;
@@ -144,6 +149,7 @@ void solve(Puzzle &puzzle){
                                 puzzle.print();
                                 r++;
                                 reset++;
+                                tooMuch++;
                             }
                         }
                     }
@@ -151,11 +157,10 @@ void solve(Puzzle &puzzle){
             }
         }
     }
-}
-                                
+    delete []match;                            
                             
     //Just in case 
-    /*
+    
     for (int r = 0; r < puzzle.height; r++){
         for (int c = 0; c < puzzle.width; c++){
             if (puzzle.get(r,c) == '?') {
@@ -166,4 +171,4 @@ void solve(Puzzle &puzzle){
             }
         }
     }
-}*/
+}
